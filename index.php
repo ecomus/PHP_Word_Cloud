@@ -2,6 +2,8 @@
 
 require dirname(__FILE__).'/tagcloud.php';
 
+$excl_words = "and|the|are|our|you|use";
+
 $full_text = <<<EOT
 dreamcraft.ch is a developement company based in Switzerland, aimed to create, integrate and mantain cutting-edge technology web applications.
 We provide you our expertise in PHP/MySQL, Microsoft .NET and various Content Management Systems in order to develop new web applications or maintain and upgrade your current web sites.
@@ -13,6 +15,16 @@ A folk wisdom says "united we stand, divided we fall". As such we work closely w
 Aicom are the creators of interactive web based tools such as FormFish, MettingPuzzle or MailJuggler.
 oriented.net is a high-quality web hosting company based in Switzerland. Our partnership with them allows us to offer advanced hosting solutions to your web application.
 EOT;
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+// TIDY STRING UP
+// Remove excluded words
+$full_text = preg_replace('/\b('.$excl_words.')\b/i','',$full_text);
+
+// Remove any words smaller than 2 chacters
+$full_text = preg_replace("/\b(\w{1,2}\s|\s\w{1,2})\b/","", $full_text);
+// end //////////////////////////////////////////////////////////////////////////////////////
+
 
 $font = dirname(__FILE__).'/Arial.ttf';
 $width = 600;
